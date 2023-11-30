@@ -27,12 +27,12 @@ export interface Secp256k1Interface extends Interface {
     functionFragment: "_add",
     values: [
       [BigNumberish, BigNumberish, BigNumberish],
-      [BigNumberish, BigNumberish, BigNumberish]
-    ]
+      [BigNumberish, BigNumberish, BigNumberish],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "_mul",
-    values: [BigNumberish, [BigNumberish, BigNumberish]]
+    values: [BigNumberish, [BigNumberish, BigNumberish]],
   ): string;
 
   decodeFunctionResult(functionFragment: "_add", data: BytesLike): Result;
@@ -48,44 +48,44 @@ export interface Secp256k1 extends BaseContract {
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TypedEventLog<TCEvent>>>;
   queryFilter<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TypedEventLog<TCEvent>>>;
 
   on<TCEvent extends TypedContractEvent>(
     event: TCEvent,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
   on<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
 
   once<TCEvent extends TypedContractEvent>(
     event: TCEvent,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
   once<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
 
   listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
+    event: TCEvent,
   ): Promise<Array<TypedListener<TCEvent>>>;
   listeners(eventName?: string): Promise<Array<Listener>>;
   removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
+    event?: TCEvent,
   ): Promise<this>;
 
   _add: TypedContractMethod<
     [
       P: [BigNumberish, BigNumberish, BigNumberish],
-      Q: [BigNumberish, BigNumberish, BigNumberish]
+      Q: [BigNumberish, BigNumberish, BigNumberish],
     ],
     [[bigint, bigint, bigint]],
     "view"
@@ -98,21 +98,21 @@ export interface Secp256k1 extends BaseContract {
   >;
 
   getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
+    key: string | FunctionFragment,
   ): T;
 
   getFunction(
-    nameOrSignature: "_add"
+    nameOrSignature: "_add",
   ): TypedContractMethod<
     [
       P: [BigNumberish, BigNumberish, BigNumberish],
-      Q: [BigNumberish, BigNumberish, BigNumberish]
+      Q: [BigNumberish, BigNumberish, BigNumberish],
     ],
     [[bigint, bigint, bigint]],
     "view"
   >;
   getFunction(
-    nameOrSignature: "_mul"
+    nameOrSignature: "_mul",
   ): TypedContractMethod<
     [d: BigNumberish, P: [BigNumberish, BigNumberish]],
     [[bigint, bigint, bigint]],

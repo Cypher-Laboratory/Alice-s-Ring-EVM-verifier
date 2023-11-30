@@ -15,85 +15,85 @@ declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
       name: "Math",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Math__factory>;
     getContractFactory(
       name: "Strings",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Strings__factory>;
     getContractFactory(
       name: "RingSigVerifier",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.RingSigVerifier__factory>;
 
     getContractAt(
       name: "Math",
       address: string | ethers.Addressable,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.Math>;
     getContractAt(
       name: "Strings",
       address: string | ethers.Addressable,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.Strings>;
     getContractAt(
       name: "RingSigVerifier",
       address: string | ethers.Addressable,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.RingSigVerifier>;
 
     deployContract(
       name: "Math",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Math>;
     deployContract(
       name: "Strings",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Strings>;
     deployContract(
       name: "RingSigVerifier",
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.RingSigVerifier>;
 
     deployContract(
       name: "Math",
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Math>;
     deployContract(
       name: "Strings",
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.Strings>;
     deployContract(
       name: "RingSigVerifier",
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<Contracts.RingSigVerifier>;
 
     // default types
     getContractFactory(
       name: string,
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<ethers.ContractFactory>;
     getContractFactory(
       abi: any[],
       bytecode: ethers.BytesLike,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<ethers.ContractFactory>;
     getContractAt(
       nameOrAbi: string | any[],
       address: string | ethers.Addressable,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<ethers.Contract>;
     deployContract(
       name: string,
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<ethers.Contract>;
     deployContract(
       name: string,
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions
+      signerOrOptions?: ethers.Signer | DeployContractOptions,
     ): Promise<ethers.Contract>;
   }
 }

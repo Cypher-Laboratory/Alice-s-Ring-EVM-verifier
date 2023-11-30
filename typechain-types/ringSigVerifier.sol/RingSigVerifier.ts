@@ -22,7 +22,7 @@ import type {
 
 export interface RingSigVerifierInterface extends Interface {
   getFunction(
-    nameOrSignature: "computeC" | "verifyRingSignature"
+    nameOrSignature: "computeC" | "verifyRingSignature",
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -32,18 +32,18 @@ export interface RingSigVerifierInterface extends Interface {
       string,
       BigNumberish,
       BigNumberish,
-      [BigNumberish, BigNumberish]
-    ]
+      [BigNumberish, BigNumberish],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: "verifyRingSignature",
-    values: [string, BigNumberish[], BigNumberish[], BigNumberish]
+    values: [string, BigNumberish[], BigNumberish[], BigNumberish],
   ): string;
 
   decodeFunctionResult(functionFragment: "computeC", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "verifyRingSignature",
-    data: BytesLike
+    data: BytesLike,
   ): Result;
 }
 
@@ -56,38 +56,38 @@ export interface RingSigVerifier extends BaseContract {
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TypedEventLog<TCEvent>>>;
   queryFilter<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TypedEventLog<TCEvent>>>;
 
   on<TCEvent extends TypedContractEvent>(
     event: TCEvent,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
   on<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
 
   once<TCEvent extends TypedContractEvent>(
     event: TCEvent,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
   once<TCEvent extends TypedContractEvent>(
     filter: TypedDeferredTopicFilter<TCEvent>,
-    listener: TypedListener<TCEvent>
+    listener: TypedListener<TCEvent>,
   ): Promise<this>;
 
   listeners<TCEvent extends TypedContractEvent>(
-    event: TCEvent
+    event: TCEvent,
   ): Promise<Array<TypedListener<TCEvent>>>;
   listeners(eventName?: string): Promise<Array<Listener>>;
   removeAllListeners<TCEvent extends TypedContractEvent>(
-    event?: TCEvent
+    event?: TCEvent,
   ): Promise<this>;
 
   computeC: TypedContractMethod<
@@ -96,7 +96,7 @@ export interface RingSigVerifier extends BaseContract {
       message: string,
       r: BigNumberish,
       previousC: BigNumberish,
-      previousPubKey: [BigNumberish, BigNumberish]
+      previousPubKey: [BigNumberish, BigNumberish],
     ],
     [bigint],
     "view"
@@ -107,37 +107,37 @@ export interface RingSigVerifier extends BaseContract {
       message: string,
       ring: BigNumberish[],
       responses: BigNumberish[],
-      c: BigNumberish
+      c: BigNumberish,
     ],
     [boolean],
     "view"
   >;
 
   getFunction<T extends ContractMethod = ContractMethod>(
-    key: string | FunctionFragment
+    key: string | FunctionFragment,
   ): T;
 
   getFunction(
-    nameOrSignature: "computeC"
+    nameOrSignature: "computeC",
   ): TypedContractMethod<
     [
       strRing: string,
       message: string,
       r: BigNumberish,
       previousC: BigNumberish,
-      previousPubKey: [BigNumberish, BigNumberish]
+      previousPubKey: [BigNumberish, BigNumberish],
     ],
     [bigint],
     "view"
   >;
   getFunction(
-    nameOrSignature: "verifyRingSignature"
+    nameOrSignature: "verifyRingSignature",
   ): TypedContractMethod<
     [
       message: string,
       ring: BigNumberish[],
       responses: BigNumberish[],
-      c: BigNumberish
+      c: BigNumberish,
     ],
     [boolean],
     "view"

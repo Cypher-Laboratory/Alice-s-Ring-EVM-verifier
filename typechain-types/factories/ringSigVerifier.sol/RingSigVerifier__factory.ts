@@ -103,7 +103,7 @@ type RingSigVerifierConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: RingSigVerifierConstructorParams
+  xs: RingSigVerifierConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => {
   return (
     typeof xs[0] === "string" ||
@@ -121,13 +121,13 @@ export class RingSigVerifier__factory extends ContractFactory {
       super(
         _abi,
         RingSigVerifier__factory.linkBytecode(linkLibraryAddresses),
-        signer
+        signer,
       );
     }
   }
 
   static linkBytecode(
-    linkLibraryAddresses: RingSigVerifierLibraryAddresses
+    linkLibraryAddresses: RingSigVerifierLibraryAddresses,
   ): string {
     let linkedBytecode = _bytecode;
 
@@ -135,14 +135,14 @@ export class RingSigVerifier__factory extends ContractFactory {
       new RegExp("__\\$ac9df8564564f09022d97baa7c4ddef38f\\$__", "g"),
       linkLibraryAddresses["contracts/secp256k1.sol:Secp256k1"]
         .replace(/^0x/, "")
-        .toLowerCase()
+        .toLowerCase(),
     );
 
     return linkedBytecode;
   }
 
   override getDeployTransaction(
-    overrides?: NonPayableOverrides & { from?: string }
+    overrides?: NonPayableOverrides & { from?: string },
   ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(overrides || {});
   }
@@ -164,7 +164,7 @@ export class RingSigVerifier__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    runner?: ContractRunner | null
+    runner?: ContractRunner | null,
   ): RingSigVerifier {
     return new Contract(address, _abi, runner) as unknown as RingSigVerifier;
   }

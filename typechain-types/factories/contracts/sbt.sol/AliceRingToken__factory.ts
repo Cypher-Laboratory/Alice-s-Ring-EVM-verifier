@@ -711,7 +711,7 @@ type AliceRingTokenConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: AliceRingTokenConstructorParams
+  xs: AliceRingTokenConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class AliceRingToken__factory extends ContractFactory {
@@ -725,13 +725,13 @@ export class AliceRingToken__factory extends ContractFactory {
 
   override getDeployTransaction(
     _verifier: AddressLike,
-    overrides?: NonPayableOverrides & { from?: string }
+    overrides?: NonPayableOverrides & { from?: string },
   ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(_verifier, overrides || {});
   }
   override deploy(
     _verifier: AddressLike,
-    overrides?: NonPayableOverrides & { from?: string }
+    overrides?: NonPayableOverrides & { from?: string },
   ) {
     return super.deploy(_verifier, overrides || {}) as Promise<
       AliceRingToken & {
@@ -750,7 +750,7 @@ export class AliceRingToken__factory extends ContractFactory {
   }
   static connect(
     address: string,
-    runner?: ContractRunner | null
+    runner?: ContractRunner | null,
   ): AliceRingToken {
     return new Contract(address, _abi, runner) as unknown as AliceRingToken;
   }

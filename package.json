@@ -1,21 +1,37 @@
 {
   "name": "evm-verifier",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "a ring signature verifier on evm",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"no test specified\" && exit 0",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "fmt:check": "npm run prettier && npm run lint",
+    "fmt": "npm run prettier:fix && npm run lint:fix"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cypher-Laboratory/.git"
+  },
+  "author": "Elli610",
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "eth-gas-reporter": "^0.2.27",
-    "hardhat": "^2.19.0"
+    "hardhat": "^2.19.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.0",
+    "@types/node": "^20.4.2",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "eslint": "^8.44.0",
     "ethers": "^6.8.1"
   }
 }

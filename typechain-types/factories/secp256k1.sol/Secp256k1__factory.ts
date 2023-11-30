@@ -73,7 +73,7 @@ type Secp256k1ConstructorParams =
   | ConstructorParameters<typeof ContractFactory>;
 
 const isSuperArgs = (
-  xs: Secp256k1ConstructorParams
+  xs: Secp256k1ConstructorParams,
 ): xs is ConstructorParameters<typeof ContractFactory> => xs.length > 1;
 
 export class Secp256k1__factory extends ContractFactory {
@@ -86,7 +86,7 @@ export class Secp256k1__factory extends ContractFactory {
   }
 
   override getDeployTransaction(
-    overrides?: NonPayableOverrides & { from?: string }
+    overrides?: NonPayableOverrides & { from?: string },
   ): Promise<ContractDeployTransaction> {
     return super.getDeployTransaction(overrides || {});
   }
