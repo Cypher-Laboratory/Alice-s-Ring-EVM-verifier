@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/Strings.sol";
 import "./utils/ec-solidity.sol";
 
 contract RingSigVerifier {
@@ -26,13 +25,22 @@ contract RingSigVerifier {
 
     constructor() {}
 
+    /**
+     * @dev Verifies a non-linkable ring signature generated with the evmCompatibilty parameters
+     *
+     * @param message - keccack256 message hash
+     * @param ring - ring of public keys [pkX0, pkY0, pkX1, pkY1, ..., pkXn, pkYn]
+     * @param responses - ring of responses [r0, r1, ..., rn]
+     * @param c - signature seed
+     *
+     * @return true if the signature is valid, false otherwise
+     */
     function verifyRingSignature(
-        uint256 message, // keccack256 hash
-        uint256[] memory ring, // ring of public keys [pkX1, pkY1, pkX2, pkY2, ..., pkXn, pkYn]
+        uint256 message,
+        uint256[] memory ring,
         uint256[] memory responses,
         uint256 c // signature seed
     ) public pure returns (bool) {
-        
         // check if ring.length is even
         require(
             ring.length > 1 && ring.length % 2 == 0,
@@ -45,10 +53,10 @@ contract RingSigVerifier {
             "Responses length must be equal to ring length / 2"
         );
 
-        // compute c1'
+        // compute c1' (message is added to the hash)
         uint256 cp = computeC1(message, responses[0], c, ring[0], ring[1]);
 
-        // compute c2', c3', ..., cn
+        // compute c2', c3', ..., cn', c0'
         for (uint256 i = 1; i < responses.length; i++) {
             cp = computeC(responses[i], cp, ring[2 * i], ring[2 * i + 1]);
         }
@@ -57,6 +65,16 @@ contract RingSigVerifier {
         return (c == cp);
     }
 
+    /**
+     * @dev Computes a ci value (i != 1)
+     *
+     * @param response - previous response
+     * @param previousC - previous c value
+     * @param xpreviousPubKey - previous public key x coordinate
+     * @param ypreviousPubKey - previous public key y coordinate
+     *
+     * @return ci value
+     */
     function computeC(
         uint256 response,
         uint256 previousC,
@@ -74,7 +92,7 @@ contract RingSigVerifier {
             "previousPubKey is not on curve"
         );
 
-        // compute rG + previousPubKey * c by tweaking ecRecover
+        // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
             xpreviousPubKey,
@@ -82,15 +100,25 @@ contract RingSigVerifier {
             previousC
         );
 
-        // message + (rG + previousPubKey * c)
+        // keccack256(message, [rG + previousPubKey * c])
         bytes memory data = abi.encodePacked(
-            // Strings.toString(uint256(uint160(computedPubKey)))
-            computedPubKey
+            uint256(uint160(computedPubKey))
         );
 
         return modulo(uint256(keccak256(data)), nn);
     }
 
+    /**
+     * @dev Computes the c1 value
+     *
+     * @param message - keccack256 message hash
+     * @param response - response[0]
+     * @param previousC - previous c value
+     * @param xPreviousPubKey - previous public key x coordinate
+     * @param yPreviousPubKey - previous public key y coordinate
+     * 
+     * @return c1 value
+     */
     function computeC1(
         uint256 message,
         uint256 response,
@@ -109,7 +137,7 @@ contract RingSigVerifier {
             "previousPubKey is not on curve"
         );
 
-        // compute rG + previousPubKey * c by tweaking ecRecover
+        // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
             xPreviousPubKey,
@@ -117,23 +145,30 @@ contract RingSigVerifier {
             previousC
         );
 
-        // message + (rG + previousPubKey * c)
+        // keccack256(message, [rG + previousPubKey * c])
         bytes memory data = abi.encodePacked(
-            // Strings.toString(message),
-            // Strings.toString(uint256(uint160(computedPubKey))) // same as ts
             message,
-            computedPubKey
+            uint256(uint160(computedPubKey))
         );
 
         return modulo(uint256(keccak256(data)), nn);
     }
 
-    // compute a * G + b * (x, y) by tweaking ecRecover
+    /**
+     * @dev Computs response * G + challenge * (x, y) by tweaking ecRecover (response and challenge are scalars)
+     * 
+     * @param response - response value
+     * @param x - previousPubKey.x
+     * @param y - previousPubKey.y
+     * @param challenge - previousC value
+     * 
+     * @return computedPubKey - the ethereum address derived from the point [response * G + challenge * (x, y)]
+     */
     function sbmul_add_smul(
-        uint256 response, // response
-        uint256 x, // previousPubKey.x
-        uint256 y, // previousPubKey.y
-        uint256 challenge // previousC
+        uint256 response,
+        uint256 x,
+        uint256 y, 
+        uint256 challenge 
     ) internal pure returns (address) {
         uint256 N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141; // order of G (= secp256k1.N)
 
@@ -144,10 +179,18 @@ contract RingSigVerifier {
                 bytes32(response), // 'msghash'
                 y % 2 != 0 ? 28 : 27, // v
                 bytes32(x), // r
-                bytes32(mulmod(challenge, x, N))
-            ); // s
+                bytes32(mulmod(challenge, x, N)) // s
+            );
     }
 
+    /**
+     * @dev Computes (value * mod) % mod
+     * 
+     * @param value - value to be modulated
+     * @param mod - mod value
+     * 
+     * @return result - the result of the modular operation
+     */
     function modulo(
         uint256 value,
         uint256 mod
