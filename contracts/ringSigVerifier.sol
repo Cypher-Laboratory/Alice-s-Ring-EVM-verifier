@@ -3,9 +3,6 @@
 pragma solidity ^0.8.20;
 
 contract RingSigVerifier {
-    // Curve parameters
-    uint256 constant aa = 0;
-    uint256 constant bb = 7;
 
     // Field size
     uint256 constant pp =
