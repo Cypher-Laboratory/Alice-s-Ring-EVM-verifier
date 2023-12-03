@@ -3,7 +3,6 @@
 pragma solidity ^0.8.20;
 
 contract RingSigVerifier {
-
     // Field size
     uint256 constant pp =
         0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
@@ -35,8 +34,7 @@ contract RingSigVerifier {
         uint256[] memory ring,
         uint256[] memory responses,
         uint256 c // signature seed
-    ) public pure returns (bool) {
-
+    ) public pure returns (uint256) {
         // check if ring.length is even
         require(
             ring.length > 0 && ring.length % 2 == 0,
@@ -52,7 +50,7 @@ contract RingSigVerifier {
         // compute c1' (message is added to the hash)
         uint256 cp = computeC1(message, responses[0], c, ring[0], ring[1]);
 
-        uint256 j = 0;
+        uint256 j = 2;
 
         // compute c2', c3', ..., cn', c0'
         for (uint256 i = 1; i < responses.length; i++) {
@@ -61,7 +59,8 @@ contract RingSigVerifier {
         }
 
         // check if c0' == c0
-        return (c == cp);
+        // return (c == cp);
+        return cp;
     }
 
     /**
@@ -69,23 +68,24 @@ contract RingSigVerifier {
      *
      * @param response - previous response
      * @param previousC - previous c value
-     * @param xpreviousPubKey - previous public key x coordinate
-     * @param ypreviousPubKey - previous public key y coordinate
+     * @param xPreviousPubKey - previous public key x coordinate
+     * @param yPreviousPubKey - previous public key y coordinate
      *
      * @return ci value
      */
     function computeC(
         uint256 response,
         uint256 previousC,
-        uint256 xpreviousPubKey,
-        uint256 ypreviousPubKey
+        uint256 xPreviousPubKey,
+        uint256 yPreviousPubKey
     ) internal pure returns (uint256) {
-        isOnSECP25K1(xpreviousPubKey, ypreviousPubKey);
+        // check if [ring[0], ring[1]] is on the curve
+        isOnSECP25K1(xPreviousPubKey, yPreviousPubKey);
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
-            xpreviousPubKey,
-            ypreviousPubKey,
+            xPreviousPubKey,
+            yPreviousPubKey,
             previousC
         );
 
@@ -148,7 +148,6 @@ contract RingSigVerifier {
         uint256 y,
         uint256 challenge
     ) internal pure returns (address) {
-
         response = mulmod((nn - response) % nn, x, nn);
 
         return
