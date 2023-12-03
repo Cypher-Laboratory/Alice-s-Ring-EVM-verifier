@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.20;
 
-import "./utils/ec-solidity.sol";
-
 contract RingSigVerifier {
     // Curve parameters
     uint256 constant aa = 0;
@@ -40,7 +38,8 @@ contract RingSigVerifier {
         uint256[] memory ring,
         uint256[] memory responses,
         uint256 c // signature seed
-    ) public pure returns (bool) {
+    ) public view returns (uint256) {
+        uint256 gasStart = gasleft();
         // check if ring.length is even
         require(
             ring.length > 1 && ring.length % 2 == 0,
@@ -62,7 +61,8 @@ contract RingSigVerifier {
         }
 
         // check if c0' == c0
-        return (c == cp);
+        // return (c == cp);
+        return gasStart - gasleft();
     }
 
     /**
@@ -81,17 +81,7 @@ contract RingSigVerifier {
         uint256 xpreviousPubKey,
         uint256 ypreviousPubKey
     ) internal pure returns (uint256) {
-        require(
-            EllipticCurve.isOnCurve(
-                xpreviousPubKey,
-                ypreviousPubKey,
-                aa,
-                bb,
-                pp
-            ),
-            "previousPubKey is not on curve"
-        );
-
+        isOnSECP25K1(xpreviousPubKey, ypreviousPubKey);
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
@@ -124,17 +114,8 @@ contract RingSigVerifier {
         uint256 xPreviousPubKey,
         uint256 yPreviousPubKey
     ) internal pure returns (uint256) {
-        require(
-            EllipticCurve.isOnCurve(
-                xPreviousPubKey,
-                yPreviousPubKey,
-                aa,
-                bb,
-                pp
-            ),
-            "previousPubKey is not on curve"
-        );
-
+        // check if [ring[0], ring[1]] is on the curve
+        isOnSECP25K1(xPreviousPubKey, yPreviousPubKey);
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
@@ -198,5 +179,21 @@ contract RingSigVerifier {
             result += mod;
         }
         return result;
+    }
+
+    /**
+     * @dev Checks if a point is on the secp256k1 curve
+     *
+     * Revert if the point is not on the curve
+     *
+     * @param x - point x coordinate
+     * @param y - point y coordinate
+     */
+    function isOnSECP25K1(uint256 x, uint256 y) internal pure {
+        if (
+            mulmod(y, y, pp) != addmod(mulmod(x, mulmod(x, x, pp), pp), 7, pp)
+        ) {
+            revert("Point is not on curve");
+        }
     }
 }
