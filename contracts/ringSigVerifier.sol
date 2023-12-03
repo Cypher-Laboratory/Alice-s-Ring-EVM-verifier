@@ -3,6 +3,7 @@
 pragma solidity ^0.8.20;
 
 import "./utils/ec-solidity.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract RingSigVerifier {
     // Curve parameters
@@ -101,9 +102,7 @@ contract RingSigVerifier {
         );
 
         // keccack256(message, [rG + previousPubKey * c])
-        bytes memory data = abi.encodePacked(
-            uint256(uint160(computedPubKey))
-        );
+        bytes memory data = abi.encodePacked(uint256(uint160(computedPubKey)));
 
         return modulo(uint256(keccak256(data)), nn);
     }
@@ -116,7 +115,7 @@ contract RingSigVerifier {
      * @param previousC - previous c value
      * @param xPreviousPubKey - previous public key x coordinate
      * @param yPreviousPubKey - previous public key y coordinate
-     * 
+     *
      * @return c1 value
      */
     function computeC1(
@@ -156,19 +155,19 @@ contract RingSigVerifier {
 
     /**
      * @dev Computs response * G + challenge * (x, y) by tweaking ecRecover (response and challenge are scalars)
-     * 
+     *
      * @param response - response value
      * @param x - previousPubKey.x
      * @param y - previousPubKey.y
      * @param challenge - previousC value
-     * 
+     *
      * @return computedPubKey - the ethereum address derived from the point [response * G + challenge * (x, y)]
      */
     function sbmul_add_smul(
         uint256 response,
         uint256 x,
-        uint256 y, 
-        uint256 challenge 
+        uint256 y,
+        uint256 challenge
     ) internal pure returns (address) {
         uint256 N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141; // order of G (= secp256k1.N)
 
@@ -185,10 +184,10 @@ contract RingSigVerifier {
 
     /**
      * @dev Computes (value * mod) % mod
-     * 
+     *
      * @param value - value to be modulated
      * @param mod - mod value
-     * 
+     *
      * @return result - the result of the modular operation
      */
     function modulo(

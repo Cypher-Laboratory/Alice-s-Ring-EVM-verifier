@@ -15,7 +15,6 @@ describe("evm-verifier", function () {
     const message =
       12113184057566780434847363020064265563638509593857816382491985674884116197064n;
 
-    console.log("messageDigest: ", message);
     const ring_: BigNumberish[] = [
       30558939714202291090863029727820829993227403204286654734430544819396481281155n,
       46835398937525857424678912804713110217248423408711238708095319128726301404767n,
@@ -37,6 +36,8 @@ describe("evm-verifier", function () {
     const c: BigNumberish =
       33439525273320178092917812293294615539453087089344012405171201878562686197180n;
 
+    console.log("ringSize: ", ring_.length / 2);
+    console.log("responses len: ", responses.length);
     console.log(
       "output: ",
       await SigVerifier.verifyRingSignature(message, ring_, responses, c),
