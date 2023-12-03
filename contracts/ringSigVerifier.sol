@@ -149,16 +149,15 @@ contract RingSigVerifier {
         uint256 y,
         uint256 challenge
     ) internal pure returns (address) {
-        uint256 N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141; // order of G (= secp256k1.N)
 
-        response = mulmod((N - response) % N, x, N);
+        response = mulmod((nn - response) % nn, x, nn);
 
         return
             ecrecover(
                 bytes32(response), // 'msghash'
                 y % 2 != 0 ? 28 : 27, // v
                 bytes32(x), // r
-                bytes32(mulmod(challenge, x, N)) // s
+                bytes32(mulmod(challenge, x, nn)) // s
             );
     }
 
