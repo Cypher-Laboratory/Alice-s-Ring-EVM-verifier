@@ -3,7 +3,6 @@
 pragma solidity ^0.8.20;
 
 import "./utils/ec-solidity.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract RingSigVerifier {
     // Curve parameters
