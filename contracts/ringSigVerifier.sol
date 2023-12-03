@@ -2,12 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import "./utils/ec-solidity.sol";
-
 contract RingSigVerifier {
-    // Curve parameters
-    uint256 constant aa = 0;
-    uint256 constant bb = 7;
 
     // Field size
     uint256 constant pp =
@@ -41,9 +36,10 @@ contract RingSigVerifier {
         uint256[] memory responses,
         uint256 c // signature seed
     ) public pure returns (bool) {
+
         // check if ring.length is even
         require(
-            ring.length > 1 && ring.length % 2 == 0,
+            ring.length > 0 && ring.length % 2 == 0,
             "Ring length must be even and greater than 1"
         );
 
@@ -56,9 +52,12 @@ contract RingSigVerifier {
         // compute c1' (message is added to the hash)
         uint256 cp = computeC1(message, responses[0], c, ring[0], ring[1]);
 
+        uint256 j = 0;
+
         // compute c2', c3', ..., cn', c0'
         for (uint256 i = 1; i < responses.length; i++) {
-            cp = computeC(responses[i], cp, ring[2 * i], ring[2 * i + 1]);
+            cp = computeC(responses[i], cp, ring[j], ring[j + 1]);
+            j += 2;
         }
 
         // check if c0' == c0
@@ -81,17 +80,7 @@ contract RingSigVerifier {
         uint256 xpreviousPubKey,
         uint256 ypreviousPubKey
     ) internal pure returns (uint256) {
-        require(
-            EllipticCurve.isOnCurve(
-                xpreviousPubKey,
-                ypreviousPubKey,
-                aa,
-                bb,
-                pp
-            ),
-            "previousPubKey is not on curve"
-        );
-
+        isOnSECP25K1(xpreviousPubKey, ypreviousPubKey);
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
@@ -103,7 +92,7 @@ contract RingSigVerifier {
         // keccack256(message, [rG + previousPubKey * c])
         bytes memory data = abi.encodePacked(uint256(uint160(computedPubKey)));
 
-        return modulo(uint256(keccak256(data)), nn);
+        return uint256(keccak256(data));
     }
 
     /**
@@ -124,17 +113,8 @@ contract RingSigVerifier {
         uint256 xPreviousPubKey,
         uint256 yPreviousPubKey
     ) internal pure returns (uint256) {
-        require(
-            EllipticCurve.isOnCurve(
-                xPreviousPubKey,
-                yPreviousPubKey,
-                aa,
-                bb,
-                pp
-            ),
-            "previousPubKey is not on curve"
-        );
-
+        // check if [ring[0], ring[1]] is on the curve
+        isOnSECP25K1(xPreviousPubKey, yPreviousPubKey);
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
@@ -149,7 +129,7 @@ contract RingSigVerifier {
             uint256(uint160(computedPubKey))
         );
 
-        return modulo(uint256(keccak256(data)), nn);
+        return uint256(keccak256(data));
     }
 
     /**
@@ -168,16 +148,15 @@ contract RingSigVerifier {
         uint256 y,
         uint256 challenge
     ) internal pure returns (address) {
-        uint256 N = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141; // order of G (= secp256k1.N)
 
-        response = mulmod((N - response) % N, x, N);
+        response = mulmod((nn - response) % nn, x, nn);
 
         return
             ecrecover(
                 bytes32(response), // 'msghash'
                 y % 2 != 0 ? 28 : 27, // v
                 bytes32(x), // r
-                bytes32(mulmod(challenge, x, N)) // s
+                bytes32(mulmod(challenge, x, nn)) // s
             );
     }
 
@@ -198,5 +177,21 @@ contract RingSigVerifier {
             result += mod;
         }
         return result;
+    }
+
+    /**
+     * @dev Checks if a point is on the secp256k1 curve
+     *
+     * Revert if the point is not on the curve
+     *
+     * @param x - point x coordinate
+     * @param y - point y coordinate
+     */
+    function isOnSECP25K1(uint256 x, uint256 y) internal pure {
+        if (
+            mulmod(y, y, pp) != addmod(mulmod(x, mulmod(x, x, pp), pp), 7, pp)
+        ) {
+            revert("Point is not on curve");
+        }
     }
 }
