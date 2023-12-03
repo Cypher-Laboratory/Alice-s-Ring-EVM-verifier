@@ -42,9 +42,9 @@ describe("evm-verifier", function () {
       "output: ",
       await SigVerifier.verifyRingSignature(message, ring_, responses, c),
     );
-    // expect(
-    //   await SigVerifier.verifyRingSignature(message, ring_, responses, c),
-    // ).to.equal(true);
+    expect(
+      await SigVerifier.verifyRingSignature(message, ring_, responses, c),
+    ).to.equal(true);
   });
 });
 

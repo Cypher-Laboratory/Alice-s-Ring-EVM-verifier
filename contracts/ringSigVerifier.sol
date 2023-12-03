@@ -34,7 +34,7 @@ contract RingSigVerifier {
         uint256[] memory ring,
         uint256[] memory responses,
         uint256 c // signature seed
-    ) public pure returns (uint256) {
+    ) public pure returns (bool) {
         // check if ring.length is even
         require(
             ring.length > 0 && ring.length % 2 == 0,
@@ -59,8 +59,7 @@ contract RingSigVerifier {
         }
 
         // check if c0' == c0
-        // return (c == cp);
-        return cp;
+        return (c == cp);
     }
 
     /**
