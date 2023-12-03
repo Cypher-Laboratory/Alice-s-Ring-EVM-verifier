@@ -39,7 +39,7 @@ contract RingSigVerifier {
         uint256 gasStart = gasleft();
         // check if ring.length is even
         require(
-            ring.length > 1 && ring.length % 2 == 0,
+            ring.length > 0 && ring.length % 2 == 0,
             "Ring length must be even and greater than 1"
         );
 
@@ -52,9 +52,12 @@ contract RingSigVerifier {
         // compute c1' (message is added to the hash)
         uint256 cp = computeC1(message, responses[0], c, ring[0], ring[1]);
 
+        uint256 j = 0;
+
         // compute c2', c3', ..., cn', c0'
         for (uint256 i = 1; i < responses.length; i++) {
-            cp = computeC(responses[i], cp, ring[2 * i], ring[2 * i + 1]);
+            cp = computeC(responses[i], cp, ring[j], ring[j + 1]);
+            j += 2;
         }
 
         // check if c0' == c0
@@ -90,7 +93,7 @@ contract RingSigVerifier {
         // keccack256(message, [rG + previousPubKey * c])
         bytes memory data = abi.encodePacked(uint256(uint160(computedPubKey)));
 
-        return modulo(uint256(keccak256(data)), nn);
+        return uint256(keccak256(data));
     }
 
     /**
@@ -127,7 +130,7 @@ contract RingSigVerifier {
             uint256(uint160(computedPubKey))
         );
 
-        return modulo(uint256(keccak256(data)), nn);
+        return uint256(keccak256(data));
     }
 
     /**
