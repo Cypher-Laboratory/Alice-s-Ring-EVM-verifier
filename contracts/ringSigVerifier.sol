@@ -61,7 +61,6 @@ contract RingSigVerifier {
 
         // check if c0' == c0
         return (c == cp);
-        // return gasStart - gasleft();
     }
 
     /**
