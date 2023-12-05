@@ -35,6 +35,7 @@ contract RingSigVerifier {
         uint256[] memory responses,
         uint256 c // signature seed
     ) public pure returns (bool) {
+
         // check if ring.length is even
         require(
             ring.length > 0 && ring.length % 2 == 0,
@@ -60,6 +61,7 @@ contract RingSigVerifier {
 
         // check if c0' == c0
         return (c == cp);
+        // return gasStart - gasleft();
     }
 
     /**
@@ -80,6 +82,7 @@ contract RingSigVerifier {
     ) internal pure returns (uint256) {
         // check if [ring[0], ring[1]] is on the curve
         isOnSECP25K1(xPreviousPubKey, yPreviousPubKey);
+
         // compute [rG + previousPubKey * c] by tweaking ecRecover
         address computedPubKey = sbmul_add_smul(
             response,
@@ -89,7 +92,7 @@ contract RingSigVerifier {
         );
 
         // keccack256(message, [rG + previousPubKey * c])
-        bytes memory data = abi.encodePacked(uint256(uint160(computedPubKey)));
+        bytes memory data = abi.encode(uint256(uint160(computedPubKey)));
 
         return uint256(keccak256(data));
     }
@@ -123,7 +126,7 @@ contract RingSigVerifier {
         );
 
         // keccack256(message, [rG + previousPubKey * c])
-        bytes memory data = abi.encodePacked(
+        bytes memory data = abi.encode(
             message,
             uint256(uint160(computedPubKey))
         );
@@ -147,6 +150,7 @@ contract RingSigVerifier {
         uint256 y,
         uint256 challenge
     ) internal pure returns (address) {
+        
         response = mulmod((nn - response) % nn, x, nn);
 
         return
