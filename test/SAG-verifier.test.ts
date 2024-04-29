@@ -7,7 +7,7 @@ const { expect } = require("chai");
 describe("evm-verifier", function () {
   it("Verify a ring signature", async function () {
     // link libraries
-    const contractFactory = await ethers.getContractFactory("RingSigVerifier");
+    const contractFactory = await ethers.getContractFactory("SAGVerifier");
 
     // deploy SigVerifier contract
     const SigVerifier = await contractFactory.deploy();
@@ -36,14 +36,14 @@ describe("evm-verifier", function () {
     const c: BigNumberish =
       33439525273320178092917812293294615539453087089344012405171201878562686197180n;
 
-    console.log("ringSize: ", ring_.length / 2);
-    console.log("responses len: ", responses.length);
-    console.log(
-      "output: ",
-      await SigVerifier.verifyRingSignature(message, ring_, responses, c),
-    );
+    // console.log("ringSize: ", ring_.length / 2);
+    // console.log("responses len: ", responses.length);
+    // console.log(
+    //   "output: ",
+    //   await SigVerifier.verify(message, ring_, responses, c),
+    // );
     expect(
-      await SigVerifier.verifyRingSignature(message, ring_, responses, c),
+      await SigVerifier.verify(message, ring_, responses, c),
     ).to.equal(true);
   });
 });
