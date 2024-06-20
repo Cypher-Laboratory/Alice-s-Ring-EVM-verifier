@@ -1,8 +1,12 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
+// Developed by Cypher Lab (https://www.cypherlab.org/)
+
+// see https://github.com/Cypher-Laboratory/evm-verifier
 
 pragma solidity ^0.8.20;
 
-contract RingSigVerifier {
+
+contract SAGVerifier {
     // Field size
     uint256 constant pp =
         0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
