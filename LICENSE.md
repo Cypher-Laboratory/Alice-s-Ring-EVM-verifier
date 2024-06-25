@@ -2,25 +2,25 @@ ALICE’S RING - SOFTWARE LICENSE
 
 PREAMBLE
 
-The solution 
+The solution
 
 CYPHER LAB, a company which designs cryptographic computer protocols, has developed an algorithmic solution named “ALICE’S RING”, a TypeScript library which provides a set of tools to aggregate data to produce tangible proofs while ensuring that the on-chain identity, valuable assets, and transaction history of users remain protected. From these tools, numerous modules will emerge to cover all possible use cases.
 
-ALICE’S RING relies on “ring signature”, a zero-knowledge proof method which consists in a type of digital signature that can be performed by any member of a set of entities that each have a public key, allowing it to prove ownership of an asset without revealing its identity. 
+ALICE’S RING relies on “ring signature”, a zero-knowledge proof method which consists in a type of digital signature that can be performed by any member of a set of entities that each have a public key, allowing it to prove ownership of an asset without revealing its identity.
 
 Thanks to its interoperability, ALICE’S RING supports multiple blockchains while keeping privacy protection intact. In order to minimize trust requirements, ALICE’S RING relies solely on public on-chain and off-chain data.
 
 Use of third-party libraries
 
-ALICE’S RING is built upon other free libraries. Third-party libraries used by ALICE’S RING are under the MIT license () and ISC license () which grant permission to use, copy, modify and distribute the software for any purpose. In making this source code available, it can be used under the terms of these licenses. 
+ALICE’S RING is built upon other free libraries. Third-party libraries used by ALICE’S RING are under the MIT license () and ISC license () which grant permission to use, copy, modify and distribute the software for any purpose. In making this source code available, it can be used under the terms of these licenses.
 
 The copyright notice and permission notice of both licenses used by ALICE’S RING should appear in all copies of ALICE’S RING created under the terms of this license, among all other mandatory notices mentioned hereinafter.
 
-The license 
+The license
 
-ALICE’S RING license is applied for any use of ALICE’S RING Source Code part that CYPHER LAB agrees to share, and which consists mainly in the ring signature solution. The other part of ALICE RING’S Source Code (mainly the process of data collection and data aggregation in rings) will never not be disclosed nor shared, and must be considered as strictly confidential, private and could not be used by anyone but CYPHER LAB or with CYPHER LAB’S prior express written and signed consent. 
+ALICE’S RING license is applied for any use of ALICE’S RING Source Code part that CYPHER LAB agrees to share, and which consists mainly in the ring signature solution. The other part of ALICE RING’S Source Code (mainly the process of data collection and data aggregation in rings) will never not be disclosed nor shared, and must be considered as strictly confidential, private and could not be used by anyone but CYPHER LAB or with CYPHER LAB’S prior express written and signed consent.
 
-DEFINITIONS 
+DEFINITIONS
 
 “Adapted Material” means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor.
 
@@ -56,17 +56,17 @@ reproduce and Share the Licensed Material, in whole or in part, for NonCommercia
 
 produce, reproduce, and Share Adapted Material for NonCommercial purposes only.
 
-Any commercial use of the License Rights in the Licensed Material is forbidden and must be expressly authorized, in a written and signed act, by the Licensor. 
+Any commercial use of the License Rights in the Licensed Material is forbidden and must be expressly authorized, in a written and signed act, by the Licensor.
 
 Exceptions and Limitations
 
-The Licensed Rights are the only rights granted under this License. No additional rights or licenses will be implied from the distribution or licensing of Licensed Material under this License. 
+The Licensed Rights are the only rights granted under this License. No additional rights or licenses will be implied from the distribution or licensing of Licensed Material under this License.
 
 For the avoidance of doubt, where Exceptions and Limitations apply to Your use, this License does not apply, and You do not need to comply with its terms and conditions.
 
 Media and formats; technical modifications allowed
 
-The Licensor authorizes You to exercise  the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights.
+The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights.
 
 For purposes of this License, simply making modifications authorized by this Section never produces Adapted Material.
 
@@ -132,7 +132,7 @@ ShareAlike
 
 In addition to the conditions in the previous Section, if You Share Adapted Material You produce, the following conditions also apply:
 
-The Adapter’s License You apply must be a License with the same License Elements, notably, the use for NonCommercial purposes only and a limitation of the Licensor’s liability for any use made of the Licensed Material or the Adapted Material. 
+The Adapter’s License You apply must be a License with the same License Elements, notably, the use for NonCommercial purposes only and a limitation of the Licensor’s liability for any use made of the Licensed Material or the Adapted Material.
 
 You must include the text of, or the URI or hyperlink to, the Adapter's License You apply. You may satisfy this condition in any reasonable manner based on the medium, means, and context in which You Share Adapted Material.
 
@@ -152,7 +152,7 @@ For the avoidance of doubt, this Section does not affect any right the Licensor 
 
 For the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this License.
 
-All provisions of the following sections survive termination of this License:  Disclaimer of warranties, Limitation of liability, Termination, Other terms and conditions and Interpretation.
+All provisions of the following sections survive termination of this License: Disclaimer of warranties, Limitation of liability, Termination, Other terms and conditions and Interpretation.
 
 DISCLAIMER OF WARRANTY
 
@@ -160,7 +160,7 @@ Unless otherwise separately undertaken by the Licensor, to the extent possible, 
 
 The entire risk as to the quality and performance of the Licensed Material is with You. Should any Licensed Material prove defective in any respect, You assume the cost of any necessary servicing, repair, or correction. This disclaimer of warranty constitutes an essential part of this License. No use of any Licensed Material is authorized under this License except under this disclaimer.
 
-In no event will the Licensor be liable for any use of the Licensed Material or the use or creation of an Adapted Material that may be NOT COMPLIANT WITH ANY APPLICABLE REGULATION/laws in force in the territory where the use TAKES PLACE or CAUSE DAMAGE. 
+In no event will the Licensor be liable for any use of the Licensed Material or the use or creation of an Adapted Material that may be NOT COMPLIANT WITH ANY APPLICABLE REGULATION/laws in force in the territory where the use TAKES PLACE or CAUSE DAMAGE.
 
 LIMITATION OF LIABILITY
 
