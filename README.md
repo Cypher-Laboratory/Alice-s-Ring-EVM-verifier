@@ -4,7 +4,7 @@
 
 ## Deployment addresses:
 
-| Network    | Logo | Donation Address     |
+| Network    |  | Deployed Address     |
 |------------|------|----------------------|
 | Ethereum   | <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png?v=024" alt="Ethereum" width="30"/> | [`0x40B162a555641B04FCd0eeA1dA84482e745f82eb`](https://etherscan.io/address/0xb9CcEe4d9CeFD1C10D4086E29a7889BBe05c2692#code) |
 | Polygon    | <img src="https://cryptologos.cc/logos/polygon-matic-logo.png?v=024" alt="Polygon" width="30"/> | [`0x40B162a555641B04FCd0eeA1dA84482e745f82eb`](https://polygonscan.com/address/0xd199eA798750c1c0769062c098e6B811727cAa66#code) |
