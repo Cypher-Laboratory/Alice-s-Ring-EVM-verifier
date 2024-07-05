@@ -1,5 +1,5 @@
 {
-  "name": "@cypher-laboratory/sag-evm-verifier",
+  "name": "@cypher-laboratory/alicesring-evm-verifier",
   "version": "0.0.1",
   "description": "A SAG ring signature verifier on EVM",
   "files": [
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cypher-Laboratory/evm-verifier.git"
+    "url": "https://github.com/Cypher-Laboratory/Alice-s-Ring-EVM-verifier.git"
   },
   "author": "Elli610",
   "license": "MIT",
@@ -33,9 +33,9 @@
     "verifier"
   ],
   "bugs": {
-    "url": "https://github.com/Cypher-Laboratory/sag-verifier/issues"
+    "url": "https://github.com/Cypher-Laboratory/alicesring-evm-verifier/issues"
   },
-  "homepage": "https://github.com/Cypher-Laboratory/sag-verifier#readme",
+  "homepage": "https://github.com/Cypher-Laboratory/alicesring-evm-verifier#readme",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
     "eth-gas-reporter": "^0.2.27",
