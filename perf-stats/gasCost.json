@@ -5,7 +5,7 @@
       "gasCost": 2
     }
   ],
-  "ks-hackaton": {
+  "ks-hackathon": {
     "description": "first try on the evm verifier, no ecrecover tweak ",
     "stats": [
       {
